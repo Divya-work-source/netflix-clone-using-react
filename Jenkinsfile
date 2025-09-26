@@ -8,6 +8,7 @@ pipeline {
 
   environment {
     SCANNER_HOME = tool 'sonar-scanner'
+    NVD_API_KEY = credentials('nvd-api-key') // Store this in Jenkins credentials securely
   }
 
   stages {
@@ -31,22 +32,31 @@ pipeline {
 
     stage('OWASP Dependency Check') {
       steps {
-        dependencyCheck additionalArguments: '--format HTML --project "netflix-clone" --scan .',
-                         odcInstallation: 'DP-Check'
-        dependencyCheckPublisher pattern: '**/dependency-check-report.html'
+        dependencyCheck additionalArguments: """
+          --format ALL 
+          --project "netflix-clone" 
+          --scan . 
+          --nvdApiKey ${NVD_API_KEY} 
+          --disableAssembly 
+          --disableNodeAudit 
+          --disableYarn 
+          --disableOssIndex
+        """,
+        odcInstallation: 'DP-Check'
+
+        dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
       }
       post {
-  always {
-    archiveArtifacts artifacts: '**/dependency-check-report.html', allowEmptyArchive: true
-  }
-}
-
+        always {
+          archiveArtifacts artifacts: '**/dependency-check-report.*', allowEmptyArchive: true
+        }
+      }
     }
 
     stage('SonarQube Analysis') {
       steps {
         withSonarQubeEnv('SonarQube') {
-          sh 'CI=true npm run build'
+          sh 'CI=true npm run build' // Will fail if any lint warnings remain
           sh "${SCANNER_HOME}/bin/sonar-scanner"
         }
       }
@@ -60,7 +70,7 @@ pipeline {
 
     stage('Trivy Scan') {
       steps {
-        sh 'trivy image netflix-app || true'  // Avoid pipeline fail on vuln
+        sh 'trivy image netflix-app || true' // Don't fail on vulnerabilities
       }
     }
 
@@ -73,7 +83,7 @@ pipeline {
             docker push $DOCKER_USER/netflix-app:latest
           '''
         }
-         }
+      }
     }
   }
 }
