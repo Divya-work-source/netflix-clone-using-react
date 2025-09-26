@@ -1,4 +1,4 @@
-ctpipeline {
+pipeline {
   agent any
 
   tools {
