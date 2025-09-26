@@ -19,7 +19,7 @@ pipeline {
 
     stage('Checkout') {
       steps {
-        git url: 'https://github.com/divya-work-source/netflix-clone.git', branch: 'main'
+        git credentialsId: 'github', url: 'https://github.com/divya-work-source/netflix-clone.git', branch: 'main'
       }
     }
 
