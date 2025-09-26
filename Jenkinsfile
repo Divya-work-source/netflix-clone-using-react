@@ -40,7 +40,7 @@ pipeline {
     stage('SonarQube Analysis') {
       steps {
         withSonarQubeEnv('SonarQube') {
-          sh 'npm run build'
+          sh 'CI= npm run build'
           sh "${SCANNER_HOME}/bin/sonar-scanner"
         }
       }
