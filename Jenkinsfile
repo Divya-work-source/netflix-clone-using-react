@@ -1,4 +1,4 @@
-pipeline {
+ctpipeline {
   agent any
 
   tools {
@@ -19,7 +19,7 @@ pipeline {
 
     stage('Checkout') {
       steps {
-        git credentialsId: 'github', url: 'https://github.com/divya-work-source/netflix-clone.git', branch: 'main'
+        git credentialsId: 'github', url: 'https://github.com/divya-work-source/netflix-clone-using-react.git', branch: 'main'
       }
     }
 
