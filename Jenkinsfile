@@ -8,7 +8,7 @@ pipeline {
 
   environment {
     SCANNER_HOME = tool 'sonar-scanner'
-    NVD_API_KEY = credentials('nvd-api-key') // Store this in Jenkins credentials securely
+  
   }
 
   stages {
@@ -36,7 +36,7 @@ pipeline {
           --format ALL 
           --project "netflix-clone" 
           --scan . 
-          --nvdApiKey ${NVD_API_KEY} 
+          
           --disableAssembly 
           --disableNodeAudit 
           --disableYarn 
