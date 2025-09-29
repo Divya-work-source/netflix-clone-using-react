@@ -31,7 +31,7 @@ Player.Video = function PlayerVideo({ src, ...restProps}) {
 };
 
 Player.Button = function PlayerBUtton({...restProps}) {
-    const { showPlayer, setShowPlayer } = useContext(PlayerContext);
+   // const { showPlayer, setShowPlayer } = useContext(PlayerContext);
     return (
         <Button onClick={() => setShowPlayer((showPlayer) => !showPlayer)}>
             Play

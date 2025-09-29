@@ -3,17 +3,17 @@ import  React, { useContext, useState, useEffect } from 'react';
 import Fuse from 'fuse.js';
 import { FirebaseContext } from '../context/firebase';
 import { SelectProfileContainer } from './profiles';
-import { Card, Header, Loading } from '../components';
+// import { Card, Header, Loading } from '../components';
 import * as ROUTES from '../constants/routes';
 import logo from '../logo.svg';
-import { FooterContainer } from './footer';
-import Player from '../components/player';
+// import { FooterContainer } from './footer';
+// import Player from '../components/player';
 
 
 
 export function BrowseContainer({ slides }) {
 
-    const [category, setCategory] = useState('series');
+    // const [category, setCategory] = useState('series');
     const [searchTerm, setSearchTerm] = useState('');
     const [profile, setProfile] = useState({});
     const [loading, setLoading] = useState(true);
@@ -29,9 +29,9 @@ export function BrowseContainer({ slides }) {
     }, [profile.displayName]);
     
 
-    useEffect(() => {
-        setSlideRows(slides[category]);
-    }, [slides, category]);
+    //useEffect(() => {
+        //setSlideRows(slides[category]);
+    //}, [slides, category]);
 
     useEffect(() => {
         const fuse = new Fuse(slideRows, 
