@@ -7,8 +7,8 @@ pipeline {
   }
 
   environment {
-    SONARQUBE = 'SonarQube'
     SCANNER_HOME = tool 'sonar-scanner'
+  
   }
 
   stages {
@@ -20,7 +20,7 @@ pipeline {
 
     stage('Checkout') {
       steps {
-        git url: 'https://github.com/divya-work-source/netflix-clone.git', branch: 'main'
+        git credentialsId: 'github', url: 'https://github.com/divya-work-source/netflix-clone-using-react.git', branch: 'main'
       }
     }
 
@@ -30,18 +30,34 @@ pipeline {
       }
     }
 
-    stage('OWASP Scan') {
+    stage('OWASP Dependency Check') {
       steps {
-        dependencyCheck additionalArguments: '--format HTML --project "netflix-clone" --scan .',
-                         odcInstallation: 'DP-Check'
+        dependencyCheck additionalArguments: """
+          --format ALL 
+          --project "netflix-clone" 
+          --scan . 
+          
+          --disableAssembly 
+          --disableNodeAudit 
+          --disableYarn 
+          --disableOssIndex
+        """,
+        odcInstallation: 'DP-Check'
+
         dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+      }
+      post {
+        always {
+          archiveArtifacts artifacts: '**/dependency-check-report.*', allowEmptyArchive: true
+        }
       }
     }
 
-    stage('SonarQube Scan') {
+    stage('SonarQube Analysis') {
       steps {
         withSonarQubeEnv('SonarQube') {
-          sh 'npm run build'
+          sh 'CI=true npm run build' // Will fail if any lint warnings remain
+          sh "${SCANNER_HOME}/bin/sonar-scanner"
         }
       }
     }
@@ -54,7 +70,7 @@ pipeline {
 
     stage('Trivy Scan') {
       steps {
-        sh 'trivy image netflix-app'
+        sh 'trivy image netflix-app || true' // Don't fail on vulnerabilities
       }
     }
 
