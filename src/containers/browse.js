@@ -11,10 +11,10 @@ import { SelectProfileContainer } from './profiles';
 
 export function BrowseContainer({ slides }) {
     // const [category, setCategory] = useState('series');
-    const [searchTerm, setSearchTerm] = useState('');
+    // const [searchTerm, setSearchTerm] = useState('');
     const [profile, setProfile] = useState({});
-    const [loading, setLoading] = useState(true);
-    const [slideRows, setSlideRows] = useState([]);
+    // const [loading, setLoading] = useState(true);
+    // const [slideRows, setSlideRows] = useState([]);
 
     const { firebase } = useContext(FirebaseContext);
     const user = firebase.auth().currentUser || {};
