@@ -35,8 +35,6 @@ pipeline {
       }
     }
 
-
-    }
     stage('Install Dependencies') {
       steps {
         sh 'npx browserslist@latest --update-db'
@@ -108,6 +106,13 @@ pipeline {
           '''
         }
       }
+    }
+  }
+  post {
+    always {
+      junit 'reports/**/*.xml'
+      archiveArtifacts artifacts: 'reports/**', allowEmptyArchive: true
+      cleanWs()
     }
   }
 }
