@@ -1,10 +1,14 @@
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import requests from '../../request'; // Adjust the path according to your folder structure
-import Row from '../row';                 // Adjust path to your Row component
-import Background from '../background';  // Adjust path to your Background component
+import requests from '../../request';     // Make sure this file exists
+import Row from '../row';                 // Make sure this file exists
+import Background from '../background';   // Make sure this file exists
 
+function Header({ bg = true, children, ...restProps }) {
+    return bg ? <Background {...restProps}>{children}</Background> : children;
+}
+
+// Define a sub-component of Header
 Header.Banner = function HeaderBanner({ children, ...restProps }) {
     const [movie, setMovie] = useState(null);
 
@@ -14,7 +18,6 @@ Header.Banner = function HeaderBanner({ children, ...restProps }) {
             const results = request.data.results;
             const randomIndex = Math.floor(Math.random() * results.length);
             setMovie(results[randomIndex]);
-            return request;
         }
         fetchData();
     }, []);
@@ -48,7 +51,7 @@ Header.Banner = function HeaderBanner({ children, ...restProps }) {
 
             <div className="banner_fadeBottom" />
 
-            <div className="nav nav_black"></div>
+            <div className="nav nav_black" />
 
             <div>
                 <Row title="NETFLIX ORIGINALS" fetchUrl={requests.fetchNetflixOriginals} isLargeRow />
@@ -63,4 +66,6 @@ Header.Banner = function HeaderBanner({ children, ...restProps }) {
         </header>
     );
 };
-                       
+
+// ✅ THIS IS THE MISSING LINE!
+export default Header;
