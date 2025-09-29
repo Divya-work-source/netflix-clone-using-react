@@ -3,7 +3,8 @@
 // ✅ Import functions from modular SDK
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import { getAuth } from 'firebase/auth'; 
+      
 // import { seedDatabase } from '../seed'; // still keep this commented if needed
 
 // ✅ Config stays the same
@@ -18,9 +19,10 @@ const config = {
 
 // ✅ Initialize Firebase app
 //const app = initializeApp(config);
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(config);
 const firestore = getFirestore(app);
-const { auth } = useContext(FirebaseContext);
+const auth = getAuth(app); // ✅
+;
 
 
 // ❌ Don't use seedDatabase unless you're intentionally seeding data
