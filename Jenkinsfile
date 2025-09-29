@@ -26,15 +26,16 @@ pipeline {
     stage('Setup Node') {
       steps {
         sh '''
-         export NVM_DIR="$HOME/.nvm"
-         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
           nvm install 18
-         nvm use 18
-         node -v
-         npm -v
-      '''
-  }
-}
+          nvm use 18
+          node -v
+          npm -v
+        '''
+      }
+    }
+
 
     stage('Install Dependencies') {
       steps {
