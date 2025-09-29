@@ -28,7 +28,8 @@ pipeline {
     stage('Install Dependencies') {
       steps {
         sh 'npx update-browserslist-db@latest'
-        sh 'npm install'
+        sh 'npm ci'
+        //sh 'npm install'
         sh 'npm audit fix --force || true'
         // sh 'npm install -g npm@9.6.7'
         sh 'npm install -g yarn'
