@@ -28,7 +28,9 @@ pipeline {
     stage('Install Dependencies') {
       steps {
         sh 'npx update-browserslist-db@latest'
-        sh 'npm ci'
+        sh 'npm install typescript@4.9.5 --save-dev'
+        sh 'npm install'
+        //sh 'npm ci'
         //sh 'npm install'
         sh 'ls -l node_modules/.bin/react-scripts || echo "react-scripts not found!"'
         sh 'npm audit fix --force || true'
