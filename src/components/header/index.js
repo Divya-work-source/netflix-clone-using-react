@@ -69,7 +69,7 @@ Header.Banner = function HeaderBanner({ children, ...restProps }) {
 
             <div className="banner_fadeBottom" />
 
-            <div className={`nav ${show && "nav_black"}`}></div>
+            <div className={`nav ${"nav_black"}`}></div>
 
         
 
