@@ -27,12 +27,12 @@ pipeline {
 
     stage('Install Dependencies') {
       steps {
-        sh 'npx browserslist@latest --update-db'
+        sh 'npx update-browserslist-db@latest'
         sh 'npm install'
         sh 'npm audit fix --force || true'
         // sh 'npm install -g npm@9.6.7'
         sh 'npm install -g yarn'
-        sh 'npm install -g @webhint/cli'
+        //sh 'npm install -g @webhint/cli'
         sh 'npm install -g sonar-scanner' // Install SonarQube Scanner
         sh 'npm install -g @microsoft/sdlc-scan'  // Install Microsoft SDL Scanner
         sh 'npm install -g trivy' // Install Trivy for container scanning    
