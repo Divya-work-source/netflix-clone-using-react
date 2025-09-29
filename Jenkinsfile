@@ -26,10 +26,19 @@ pipeline {
 
     stage('Install Dependencies') {
       steps {
-        npx browserslist@latest --update-db
+        sh 'npx browserslist@latest --update-db'
         sh 'npm install'
+        sh 'npm install -g npm@9.6.7'
+        sh 'npm install -g yarn'
+        sh 'npm install -g @sonarwhal/cli'
+        sh 'npm install -g sonar-scanner' // Install SonarQube Scanner
+        sh 'npm install -g @microsoft/sdlc-scan'  // Install Microsoft SDL Scanner
+        sh 'npm install -g trivy' // Install Trivy for container scanning    
+        sh 'npx -p @microsoft/sdlc-scan sdlc-scan install'
+        sh 'npx -p @microsoft/sdlc-scan sdlc-scan run --src . --out sdlc-report.json --format sarif'
       }
     }
+
 
     stage('OWASP Dependency Check') {
       steps {
