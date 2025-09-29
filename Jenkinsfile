@@ -26,6 +26,7 @@ pipeline {
 
     stage('Install Dependencies') {
       steps {
+        npx browserslist@latest --update-db
         sh 'npm install'
       }
     }
