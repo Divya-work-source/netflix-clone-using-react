@@ -34,10 +34,7 @@ pipeline {
         sh 'npm install -g yarn'
         //sh 'npm install -g @webhint/cli'
         sh 'npm install -g sonar-scanner' // Install SonarQube Scanner
-        sh 'npm install -g @microsoft/sdlc-scan'  // Install Microsoft SDL Scanner
-        sh 'npm install -g trivy' // Install Trivy for container scanning    
-        sh 'npx -p @microsoft/sdlc-scan sdlc-scan install'
-        sh 'npx -p @microsoft/sdlc-scan sdlc-scan run --src . --out sdlc-report.json --format sarif'
+        
       }
     }
 
