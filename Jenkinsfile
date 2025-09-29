@@ -23,7 +23,26 @@ pipeline {
         git credentialsId: 'github', url: 'https://github.com/divya-work-source/netflix-clone-using-react.git', branch: 'main'
       }
     }
+    stage('Setup Node') {
+      steps {
+        // Example: install Node 18 via nvm (make sure nvm is installed on agent)
+        sh '''
+          nvm install 18
+          nvm use 18
+          node -v
+          npm -v
+        '''
+      }
+    }
 
+    stage('Install Dependencies') {
+      steps {
+        sh '''
+          npm install
+          npm audit fix --force || true
+        '''
+      }
+    }
     stage('Install Dependencies') {
       steps {
         sh 'npx browserslist@latest --update-db'
