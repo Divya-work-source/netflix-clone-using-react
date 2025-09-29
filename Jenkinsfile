@@ -3,12 +3,11 @@ pipeline {
 
   tools {
     jdk 'jdk17'
-    nodejs 'node16'
+    nodejs 'node20' // Make sure Node 20 is configured in Jenkins global tools
   }
 
   environment {
     SCANNER_HOME = tool 'sonar-scanner'
-  
   }
 
   stages {
@@ -23,28 +22,13 @@ pipeline {
         git credentialsId: 'github', url: 'https://github.com/divya-work-source/netflix-clone-using-react.git', branch: 'main'
       }
     }
-   
 
-    stage('Install Dependencies') {
+    stage('Install and Build') {
       steps {
         sh 'npx update-browserslist-db@latest'
-        sh 'npm install typescript@4.9.5 --save-dev'
-        sh 'npm install'
-        //sh 'npm ci'
-        //sh 'npm install'
-        sh 'ls -l node_modules/.bin/react-scripts || echo "react-scripts not found!"'
-        sh 'npm audit fix --force || true'
-        // sh 'npm install -g npm@9.6.7'
-        sh 'npm install -g yarn'
-        //sh 'npm install -g @webhint/cli'
-        sh 'npm install -g sonar-scanner' // Install SonarQube Scanner
-        
-      }
-    }
-    stage('Build') {
-      steps {
-        sh 'ls -l node_modules/.bin/react-scripts'
+        sh 'npm ci'
         sh 'npm run build'
+        sh 'ls -l node_modules/.bin/react-scripts'
       }
     }
 
@@ -54,7 +38,6 @@ pipeline {
           --format ALL 
           --project "netflix-clone" 
           --scan . 
-          
           --disableAssembly 
           --disableNodeAudit 
           --disableYarn 
@@ -74,7 +57,6 @@ pipeline {
     stage('SonarQube Analysis') {
       steps {
         withSonarQubeEnv('SonarQube') {
-          sh 'npm run build' // Will fail if any lint warnings remain
           sh "${SCANNER_HOME}/bin/sonar-scanner"
         }
       }
@@ -88,7 +70,7 @@ pipeline {
 
     stage('Trivy Scan') {
       steps {
-        sh 'trivy image netflix-app || true' // Don't fail on vulnerabilities
+        sh 'trivy image netflix-app || true'
       }
     }
 
@@ -104,9 +86,9 @@ pipeline {
       }
     }
   }
+
   post {
     always {
-      //junit 'reports/**/*.xml'
       archiveArtifacts artifacts: 'reports/**', allowEmptyArchive: true
       cleanWs()
     }
