@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import requests from '../../requests';    // Adjust the path according to your folder structure
+import requests from '../../request'; // Adjust the path according to your folder structure
 import Row from '../row';                 // Adjust path to your Row component
 import Background from '../background';  // Adjust path to your Background component
 
