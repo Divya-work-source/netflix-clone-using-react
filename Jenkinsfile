@@ -41,7 +41,12 @@ pipeline {
         
       }
     }
-
+    stage('Build') {
+      steps {
+        sh 'ls -l node_modules/.bin/react-scripts'
+        sh 'npm run build'
+      }
+    }
 
     stage('OWASP Dependency Check') {
       steps {
