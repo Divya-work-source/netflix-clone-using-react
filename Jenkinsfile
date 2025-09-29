@@ -30,7 +30,7 @@ pipeline {
         sh 'npx browserslist@latest --update-db'
         sh 'npm install'
         sh 'npm audit fix --force || true'
-        sh 'npm install -g npm@9.6.7'
+        // sh 'npm install -g npm@9.6.7'
         sh 'npm install -g yarn'
         sh 'npm install -g @webhint/cli'
         sh 'npm install -g sonar-scanner' // Install SonarQube Scanner
@@ -100,7 +100,7 @@ pipeline {
   }
   post {
     always {
-      junit 'reports/**/*.xml'
+      //junit 'reports/**/*.xml'
       archiveArtifacts artifacts: 'reports/**', allowEmptyArchive: true
       cleanWs()
     }
