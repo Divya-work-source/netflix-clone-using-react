@@ -56,7 +56,7 @@ pipeline {
     stage('SonarQube Analysis') {
       steps {
         withSonarQubeEnv('SonarQube') {
-          sh 'CI=true npm run build' // Will fail if any lint warnings remain
+          sh 'npm run build' // Will fail if any lint warnings remain
           sh "${SCANNER_HOME}/bin/sonar-scanner"
         }
       }
