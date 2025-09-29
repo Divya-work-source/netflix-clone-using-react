@@ -30,6 +30,7 @@ pipeline {
         sh 'npx update-browserslist-db@latest'
         sh 'npm ci'
         //sh 'npm install'
+        sh 'ls -l node_modules/.bin/react-scripts || echo "react-scripts not found!"'
         sh 'npm audit fix --force || true'
         // sh 'npm install -g npm@9.6.7'
         sh 'npm install -g yarn'
