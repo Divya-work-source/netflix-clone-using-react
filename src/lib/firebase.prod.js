@@ -19,7 +19,8 @@ const config = {
 // ✅ Initialize Firebase app
 const app = initializeApp(config);
 const firestore = getFirestore(app);
-const auth = getAuth(app);
+const { auth } = useContext(FirebaseContext);
+
 
 // ❌ Don't use seedDatabase unless you're intentionally seeding data
 // seedDatabase(app);
