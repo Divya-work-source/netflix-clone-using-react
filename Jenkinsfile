@@ -29,8 +29,9 @@ pipeline {
         sh 'npm ci'
         sh 'npm run build'
         
-        sh 'npm audit fix --force || true'
+        // sh 'npm audit fix --force || true'
         sh 'npm install react-scripts@latest'
+        sh 'npm install movie-trailer@3.2.1 --save'
         sh 'ls -l node_modules/.bin/react-scripts'
       }
     }
