@@ -28,7 +28,9 @@ pipeline {
         sh 'npx update-browserslist-db@latest'
         sh 'npm ci'
         sh 'npm run build'
+        
         sh 'npm audit fix --force || true'
+        sh 'npm install react-scripts@latest'
         sh 'ls -l node_modules/.bin/react-scripts'
       }
     }
